@@ -8,6 +8,13 @@
 
 #include <cstdint>
 
+struct GUID {
+    uint32_t  Data1;
+    uint16_t Data2;
+    uint16_t Data3;
+    uint8_t  Data4[8];
+};
+
 #define IMAGE_DOS_SIGNATURE 0x5A4D
 #define IMAGE_OS2_SIGNATURE 0x454E
 #define IMAGE_OS2_SIGNATURE_LE 0x454C
@@ -134,7 +141,7 @@ struct IMAGE_FILE_HEADER {
 	uint32_t PointerToSymbolTable;
 	uint32_t NumberOfSymbols;
 	uint16_t SizeOfOptionalHeader;
-	uint16_t int8_tacteristics;
+	uint16_t Characteristics;
 };
 
 #define IMAGE_SIZEOF_FILE_HEADER 20
@@ -193,89 +200,88 @@ struct IMAGE_DATA_DIRECTORY {
 
 #define IMAGE_NUMBEROF_DIRECTORY_ENTRIES 16
 
-    typedef struct _IMAGE_OPTIONAL_HEADER {
+struct IMAGE_OPTIONAL_HEADER32 {
+	uint16_t Magic;
+	uint8_t MajorLinkerVersion;
+	uint8_t MinorLinkerVersion;
+	uint32_t SizeOfCode;
+	uint32_t SizeOfInitializedData;
+	uint32_t SizeOfUninitializedData;
+	uint32_t AddressOfEntryPoint;
+	uint32_t BaseOfCode;
+	uint32_t BaseOfData;
+	uint32_t ImageBase;
+	uint32_t SectionAlignment;
+	uint32_t FileAlignment;
+	uint16_t MajorOperatingSystemVersion;
+	uint16_t MinorOperatingSystemVersion;
+	uint16_t MajorImageVersion;
+	uint16_t MinorImageVersion;
+	uint16_t MajorSubsystemVersion;
+	uint16_t MinorSubsystemVersion;
+	uint32_t Win32VersionValue;
+	uint32_t SizeOfImage;
+	uint32_t SizeOfHeaders;
+	uint32_t CheckSum;
+	uint16_t Subsystem;
+	uint16_t DllCharacteristics;
+	uint32_t SizeOfStackReserve;
+	uint32_t SizeOfStackCommit;
+	uint32_t SizeOfHeapReserve;
+	uint32_t SizeOfHeapCommit;
+	uint32_t LoaderFlags;
+	uint32_t NumberOfRvaAndSizes;
+	IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
+};
 
-      uint16_t Magic;
-      uint8_t MajorLinkerVersion;
-      uint8_t MinorLinkerVersion;
-      uint32_t SizeOfCode;
-      uint32_t SizeOfInitializedData;
-      uint32_t SizeOfUninitializedData;
-      uint32_t AddressOfEntryPoint;
-      uint32_t BaseOfCode;
-      uint32_t BaseOfData;
-      uint32_t ImageBase;
-      uint32_t SectionAlignment;
-      uint32_t FileAlignment;
-      uint16_t MajorOperatingSystemVersion;
-      uint16_t MinorOperatingSystemVersion;
-      uint16_t MajorImageVersion;
-      uint16_t MinorImageVersion;
-      uint16_t MajorSubsystemVersion;
-      uint16_t MinorSubsystemVersion;
-      uint32_t Win32VersionValue;
-      uint32_t SizeOfImage;
-      uint32_t SizeOfHeaders;
-      uint32_t CheckSum;
-      uint16_t Subsystem;
-      uint16_t Dllint8_tacteristics;
-      uint32_t SizeOfStackReserve;
-      uint32_t SizeOfStackCommit;
-      uint32_t SizeOfHeapReserve;
-      uint32_t SizeOfHeapCommit;
-      uint32_t LoaderFlags;
-      uint32_t NumberOfRvaAndSizes;
-      IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
-    } IMAGE_OPTIONAL_HEADER32,*PIMAGE_OPTIONAL_HEADER32;
+struct IMAGE_ROM_OPTIONAL_HEADER {
+	uint16_t Magic;
+	uint8_t MajorLinkerVersion;
+	uint8_t MinorLinkerVersion;
+	uint32_t SizeOfCode;
+	uint32_t SizeOfInitializedData;
+	uint32_t SizeOfUninitializedData;
+	uint32_t AddressOfEntryPoint;
+	uint32_t BaseOfCode;
+	uint32_t BaseOfData;
+	uint32_t BaseOfBss;
+	uint32_t GprMask;
+	uint32_t CprMask[4];
+	uint32_t GpValue;
+};
 
-    typedef struct _IMAGE_ROM_OPTIONAL_HEADER {
-      uint16_t Magic;
-      uint8_t MajorLinkerVersion;
-      uint8_t MinorLinkerVersion;
-      uint32_t SizeOfCode;
-      uint32_t SizeOfInitializedData;
-      uint32_t SizeOfUninitializedData;
-      uint32_t AddressOfEntryPoint;
-      uint32_t BaseOfCode;
-      uint32_t BaseOfData;
-      uint32_t BaseOfBss;
-      uint32_t GprMask;
-      uint32_t CprMask[4];
-      uint32_t GpValue;
-    } IMAGE_ROM_OPTIONAL_HEADER,*PIMAGE_ROM_OPTIONAL_HEADER;
-
-    typedef struct _IMAGE_OPTIONAL_HEADER64 {
-      uint16_t Magic;
-      uint8_t MajorLinkerVersion;
-      uint8_t MinorLinkerVersion;
-      uint32_t SizeOfCode;
-      uint32_t SizeOfInitializedData;
-      uint32_t SizeOfUninitializedData;
-      uint32_t AddressOfEntryPoint;
-      uint32_t BaseOfCode;
-      uint64_t ImageBase;
-      uint32_t SectionAlignment;
-      uint32_t FileAlignment;
-      uint16_t MajorOperatingSystemVersion;
-      uint16_t MinorOperatingSystemVersion;
-      uint16_t MajorImageVersion;
-      uint16_t MinorImageVersion;
-      uint16_t MajorSubsystemVersion;
-      uint16_t MinorSubsystemVersion;
-      uint32_t Win32VersionValue;
-      uint32_t SizeOfImage;
-      uint32_t SizeOfHeaders;
-      uint32_t CheckSum;
-      uint16_t Subsystem;
-      uint16_t Dllint8_tacteristics;
-      uint64_t SizeOfStackReserve;
-      uint64_t SizeOfStackCommit;
-      uint64_t SizeOfHeapReserve;
-      uint64_t SizeOfHeapCommit;
-      uint32_t LoaderFlags;
-      uint32_t NumberOfRvaAndSizes;
-      IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
-    } IMAGE_OPTIONAL_HEADER64,*PIMAGE_OPTIONAL_HEADER64;
+struct IMAGE_OPTIONAL_HEADER64 {
+	uint16_t Magic;
+	uint8_t MajorLinkerVersion;
+	uint8_t MinorLinkerVersion;
+	uint32_t SizeOfCode;
+	uint32_t SizeOfInitializedData;
+	uint32_t SizeOfUninitializedData;
+	uint32_t AddressOfEntryPoint;
+	uint32_t BaseOfCode;
+	uint64_t ImageBase;
+	uint32_t SectionAlignment;
+	uint32_t FileAlignment;
+	uint16_t MajorOperatingSystemVersion;
+	uint16_t MinorOperatingSystemVersion;
+	uint16_t MajorImageVersion;
+	uint16_t MinorImageVersion;
+	uint16_t MajorSubsystemVersion;
+	uint16_t MinorSubsystemVersion;
+	uint32_t Win32VersionValue;
+	uint32_t SizeOfImage;
+	uint32_t SizeOfHeaders;
+	uint32_t CheckSum;
+	uint16_t Subsystem;
+	uint16_t DllCharcteristics;
+	uint64_t SizeOfStackReserve;
+	uint64_t SizeOfStackCommit;
+	uint64_t SizeOfHeapReserve;
+	uint64_t SizeOfHeapCommit;
+	uint32_t LoaderFlags;
+	uint32_t NumberOfRvaAndSizes;
+	IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
+};
 
 #define IMAGE_SIZEOF_ROM_OPTIONAL_HEADER 56
 #define IMAGE_SIZEOF_STD_OPTIONAL_HEADER 28
@@ -286,42 +292,23 @@ struct IMAGE_DATA_DIRECTORY {
 #define IMAGE_NT_OPTIONAL_HDR64_MAGIC 0x20b
 #define IMAGE_ROM_OPTIONAL_HDR_MAGIC 0x107
 
-#ifdef _WIN64
-    typedef IMAGE_OPTIONAL_HEADER64 IMAGE_OPTIONAL_HEADER;
-    typedef PIMAGE_OPTIONAL_HEADER64 PIMAGE_OPTIONAL_HEADER;
-#define IMAGE_SIZEOF_NT_OPTIONAL_HEADER IMAGE_SIZEOF_NT_OPTIONAL64_HEADER
-#define IMAGE_NT_OPTIONAL_HDR_MAGIC IMAGE_NT_OPTIONAL_HDR64_MAGIC
-#else  /* _WIN64 */
-    typedef IMAGE_OPTIONAL_HEADER32 IMAGE_OPTIONAL_HEADER;
-    typedef PIMAGE_OPTIONAL_HEADER32 PIMAGE_OPTIONAL_HEADER;
-#define IMAGE_SIZEOF_NT_OPTIONAL_HEADER IMAGE_SIZEOF_NT_OPTIONAL32_HEADER
-#define IMAGE_NT_OPTIONAL_HDR_MAGIC IMAGE_NT_OPTIONAL_HDR32_MAGIC
-#endif /* _WIN64 */
 
-    typedef struct _IMAGE_NT_HEADERS64 {
-      uint32_t Signature;
-      IMAGE_FILE_HEADER FileHeader;
-      IMAGE_OPTIONAL_HEADER64 OptionalHeader;
-    } IMAGE_NT_HEADERS64,*PIMAGE_NT_HEADERS64;
+struct IMAGE_NT_HEADERS64 {
+	uint32_t Signature;
+	IMAGE_FILE_HEADER FileHeader;
+	IMAGE_OPTIONAL_HEADER64 OptionalHeader;
+};
 
-    typedef struct _IMAGE_NT_HEADERS {
-      uint32_t Signature;
-      IMAGE_FILE_HEADER FileHeader;
-      IMAGE_OPTIONAL_HEADER32 OptionalHeader;
-    } IMAGE_NT_HEADERS32,*PIMAGE_NT_HEADERS32;
+struct IMAGE_NT_HEADERS32 {
+	uint32_t Signature;
+	IMAGE_FILE_HEADER FileHeader;
+	IMAGE_OPTIONAL_HEADER32 OptionalHeader;
+};
 
-    typedef struct _IMAGE_ROM_HEADERS {
-      IMAGE_FILE_HEADER FileHeader;
-      IMAGE_ROM_OPTIONAL_HEADER OptionalHeader;
-    } IMAGE_ROM_HEADERS,*PIMAGE_ROM_HEADERS;
-
-#ifdef _WIN64
-    typedef IMAGE_NT_HEADERS64 IMAGE_NT_HEADERS;
-    typedef PIMAGE_NT_HEADERS64 PIMAGE_NT_HEADERS;
-#else  /* _WIN64 */
-    typedef IMAGE_NT_HEADERS32 IMAGE_NT_HEADERS;
-    typedef PIMAGE_NT_HEADERS32 PIMAGE_NT_HEADERS;
-#endif /* _WIN64 */
+struct IMAGE_ROM_HEADERS {
+	IMAGE_FILE_HEADER FileHeader;
+	IMAGE_ROM_OPTIONAL_HEADER OptionalHeader;
+};
 
 #define IMAGE_FIRST_SECTION(ntheader) ((PIMAGE_SECTION_HEADER) ((Uint32_t_PTR)ntheader + FIELD_OFFSET(IMAGE_NT_HEADERS,OptionalHeader) + ((PIMAGE_NT_HEADERS)(ntheader))->FileHeader.SizeOfOptionalHeader))
 
@@ -340,14 +327,14 @@ struct IMAGE_DATA_DIRECTORY {
 #define IMAGE_SUBSYSTEM_XBOX 14
 #define IMAGE_SUBSYSTEM_WINDOWS_BOOT_APPLICATION 16
 
-#define IMAGE_DLLint8_tACTERISTICS_DYNAMIC_BASE 0x0040
-#define IMAGE_DLLint8_tACTERISTICS_FORCE_INTEGRITY 0x0080
-#define IMAGE_DLLint8_tACTERISTICS_NX_COMPAT 0x0100
-#define IMAGE_DLLint8_tACTERISTICS_NO_ISOLATION 0x0200
-#define IMAGE_DLLint8_tACTERISTICS_NO_SEH 0x0400
-#define IMAGE_DLLint8_tACTERISTICS_NO_BIND 0x0800
-#define IMAGE_DLLint8_tACTERISTICS_WDM_DRIVER 0x2000
-#define IMAGE_DLLint8_tACTERISTICS_TERMINAL_SERVER_AWARE 0x8000
+#define IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE 0x0040
+#define IMAGE_DLLCHARACTERISTICS_FORCE_INTEGRITY 0x0080
+#define IMAGE_DLLCHARACTERISTICS_NX_COMPAT 0x0100
+#define IMAGE_DLLCHARACTERISTICS_NO_ISOLATION 0x0200
+#define IMAGE_DLLCHARACTERISTICS_NO_SEH 0x0400
+#define IMAGE_DLLCHARACTERISTICS_NO_BIND 0x0800
+#define IMAGE_DLLCHARACTERISTICS_WDM_DRIVER 0x2000
+#define IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE 0x8000
 
 #define IMAGE_DIRECTORY_ENTRY_EXPORT 0
 #define IMAGE_DIRECTORY_ENTRY_IMPORT 1
@@ -366,33 +353,33 @@ struct IMAGE_DATA_DIRECTORY {
 #define IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT 13
 #define IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR 14
 
-    typedef struct ANON_OBJECT_HEADER {
-      uint16_t Sig1;
-      uint16_t Sig2;
-      uint16_t Version;
-      uint16_t Machine;
-      uint32_t TimeDateStamp;
-      CLSID ClassID;
-      uint32_t SizeOfData;
-    } ANON_OBJECT_HEADER;
+struct ANON_OBJECT_HEADER {
+	uint16_t Sig1;
+	uint16_t Sig2;
+	uint16_t Version;
+	uint16_t Machine;
+	uint32_t TimeDateStamp;
+	GUID ClassID;
+	uint32_t SizeOfData;
+};
 
 #define IMAGE_SIZEOF_SHORT_NAME 8
 
-    typedef struct _IMAGE_SECTION_HEADER {
-      uint8_t Name[IMAGE_SIZEOF_SHORT_NAME];
-      union {
-	uint32_t PhysicalAddress;
-	uint32_t VirtualSize;
-      } Misc;
-      uint32_t VirtualAddress;
-      uint32_t SizeOfRawData;
-      uint32_t PointerToRawData;
-      uint32_t PointerToRelocations;
-      uint32_t PointerToLinenumbers;
-      uint16_t NumberOfRelocations;
-      uint16_t NumberOfLinenumbers;
-      uint32_t int8_tacteristics;
-    } IMAGE_SECTION_HEADER,*PIMAGE_SECTION_HEADER;
+struct IMAGE_SECTION_HEADER {
+	uint8_t Name[IMAGE_SIZEOF_SHORT_NAME];
+	union {
+		uint32_t PhysicalAddress;
+		uint32_t VirtualSize;
+	};
+	uint32_t VirtualAddress;
+	uint32_t SizeOfRawData;
+	uint32_t PointerToRawData;
+	uint32_t PointerToRelocations;
+	uint32_t PointerToLinenumbers;
+	uint16_t NumberOfRelocations;
+	uint16_t NumberOfLinenumbers;
+	uint32_t Characteristics;
+};
 
 #define IMAGE_SIZEOF_SECTION_HEADER 40
 
@@ -443,22 +430,21 @@ struct IMAGE_DATA_DIRECTORY {
 
 #pragma pack(2)
 
-    typedef struct _IMAGE_SYMBOL {
-      union {
-	uint8_t ShortName[8];
-	struct {
-	  uint32_t Short;
-	  uint32_t int32_t;
-	} Name;
-	uint32_t int32_tName[2];
-      } N;
-      uint32_t Value;
-      SHORT SectionNumber;
-      uint16_t Type;
-      uint8_t StorageClass;
-      uint8_t NumberOfAuxSymbols;
-    } IMAGE_SYMBOL;
-    typedef IMAGE_SYMBOL UNALIGNED *PIMAGE_SYMBOL;
+struct IMAGE_SYMBOL {
+	union {
+		uint8_t ShortName[8];
+		struct {
+			uint32_t Short;
+			uint32_t Long;
+		};
+		uint32_t int32_tName[2];
+	};
+	uint32_t Value;
+	int16_t SectionNumber;
+	uint16_t Type;
+	uint8_t StorageClass;
+	uint8_t NumberOfAuxSymbols;
+};
 
 #define IMAGE_SIZEOF_SYMBOL 18
 
@@ -552,58 +538,53 @@ struct IMAGE_DATA_DIRECTORY {
 #define DECREF(x) ((((x)>>N_TSHIFT)&~N_BTMASK)|((x)&N_BTMASK))
 #endif
 
-    typedef union _IMAGE_AUX_SYMBOL {
-      struct {
-	uint32_t TagIndex;
-	union {
-	  struct {
-	    uint16_t Linenumber;
-	    uint16_t Size;
-	  } LnSz;
-	  uint32_t TotalSize;
-	} Misc;
-	union {
-	  struct {
-	    uint32_t PointerToLinenumber;
-	    uint32_t PointerToNextFunction;
-	  } Function;
-	  struct {
-	    uint16_t Dimension[4];
-	  } Array;
-	} FcnAry;
-	uint16_t TvIndex;
-      } Sym;
-      struct {
-	uint8_t Name[IMAGE_SIZEOF_SYMBOL];
-      } File;
-      struct {
-	uint32_t Length;
-	uint16_t NumberOfRelocations;
-	uint16_t NumberOfLinenumbers;
-	uint32_t CheckSum;
-	SHORT Number;
-	uint8_t Selection;
-      } Section;
-    } IMAGE_AUX_SYMBOL;
-    typedef IMAGE_AUX_SYMBOL UNALIGNED *PIMAGE_AUX_SYMBOL;
+union _IMAGE_AUX_SYMBOL {
+	struct {
+		uint32_t TagIndex;
+		union {
+			struct {
+				uint16_t Linenumber;
+				uint16_t Size;
+			};
+			uint32_t TotalSize;
+		};
+		union {
+			struct {
+				uint32_t PointerToLinenumber;
+				uint32_t PointerToNextFunction;
+			};
+			struct {
+				uint16_t Dimension[4];
+			};
+		};
+		uint16_t TvIndex;
+	};
+	struct {
+		uint8_t Name[IMAGE_SIZEOF_SYMBOL];
+	};
+	struct {
+		uint32_t Length;
+		uint16_t NumberOfRelocations;
+		uint16_t NumberOfLinenumbers;
+		uint32_t CheckSum;
+		int16_t Number;
+		uint8_t Selection;
+	};
+};
 
 #define IMAGE_SIZEOF_AUX_SYMBOL 18
 
-    typedef enum IMAGE_AUX_SYMBOL_TYPE {
-      IMAGE_AUX_SYMBOL_TYPE_TOKEN_DEF = 1
-    } IMAGE_AUX_SYMBOL_TYPE;
+enum IMAGE_AUX_SYMBOL_TYPE {
+  IMAGE_AUX_SYMBOL_TYPE_TOKEN_DEF = 1
+};
 
 #pragma pack(2)
 
-    typedef struct IMAGE_AUX_SYMBOL_TOKEN_DEF {
-      uint8_t bAuxType;
-      uint8_t bReserved;
-      uint32_t SymbolTableIndex;
-      uint8_t rgbReserved[12];
-    } IMAGE_AUX_SYMBOL_TOKEN_DEF;
-
-    typedef IMAGE_AUX_SYMBOL_TOKEN_DEF UNALIGNED *PIMAGE_AUX_SYMBOL_TOKEN_DEF;
-
-
+struct IMAGE_AUX_SYMBOL_TOKEN_DEF {
+	uint8_t bAuxType;
+	uint8_t bReserved;
+	uint32_t SymbolTableIndex;
+	uint8_t rgbReserved[12];
+};
 
 #endif
