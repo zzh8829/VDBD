@@ -28,3 +28,6 @@
 *.app
 
 *.dmp
+
+# Include all sample files
+!samples/*

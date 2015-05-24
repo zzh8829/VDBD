@@ -18,7 +18,7 @@ EXECUTABLE=$(BDIR)/vdbd
 
 all: DIRS $(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJECTS) 
+$(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@
 
 $(ODIR)/%.o: $(SDIR)/%.cpp
@@ -42,7 +42,7 @@ run: $(EXECUTABLE)
 else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
-    
+
 DIRS:
 	mkdir -p $(ODIR) $(BDIR)
 
@@ -51,6 +51,9 @@ clean:
 
     endif
     ifeq ($(UNAME_S),Darwin)
+
+run: $(EXECUTABLE)
+	$(EXECUTABLE)
 
 DIRS:
 	mkdir -p $(ODIR) $(BDIR)
