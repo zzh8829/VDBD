@@ -9,26 +9,12 @@
 
 using namespace std;
 
-int main()
+void decompile_win(stringstream& data)
 {
-	freopen("vdbd.out", "w", stdout);
-
-	ifstream file;
-	file.open("samples/helloworld/helloworld.exe", ios::binary);    
-
-    stringstream data;
-    copy(istreambuf_iterator<char>(file),
-    	istreambuf_iterator<char>(),
-    	ostreambuf_iterator<char>(data));
-
-    file.close();   
-
 	IMAGE_DOS_HEADER dosHeader;
 
-	//cout << data.tellg() << endl;
-
 	data.read((char*)&dosHeader, sizeof(IMAGE_DOS_HEADER));
-	
+
 	assert(dosHeader.e_magic == IMAGE_DOS_SIGNATURE);
 
 #define _DEBUG 1
@@ -60,7 +46,7 @@ int main()
 
 	uint32_t signature;
 	data.read((char*)&signature, sizeof(uint32_t));
-	
+
 	assert(signature == IMAGE_NT_SIGNATURE);
 
 #if _DEBUG
@@ -151,11 +137,11 @@ int main()
 #endif
 		}
 
-	} 
+	}
 	else if(optionalHeaderMagic == IMAGE_NT_OPTIONAL_HDR64_MAGIC)
 	{
 
-	} 
+	}
 
 	cout << "Unknown:" << endl;
 	for(int i=0;i!=1000;i++)
@@ -166,6 +152,47 @@ int main()
 	}
 	cout << endl;
 	cout << "END" << endl;
+}
+
+void decompile_osx(stringstream& data)
+{
+
+}
+
+int main(int argc, char* argv[])
+{
+	//string binary = "./samples/helloworld/helloworld-win-mingw.exe";
+	string filename = "./samples/helloworld/helloworld-osx-gcc";
+
+	if(argc > 1)
+	{
+		if(argc > 2)
+		{
+			cerr << "Usage: " << argv[0] << " [filename]" << endl;
+			exit(1);
+		}
+		filename = argv[1];
+	}
+	//freopen("vdbd.out", "w", stdout);
+
+	ifstream file;
+	file.open(filename, ios::binary);
+
+	if(!file.is_open())
+	{
+		cerr << "Cannot open file: " << filename << endl;
+		exit(1);
+	}
+
+    stringstream data;
+    copy(istreambuf_iterator<char>(file),
+    	istreambuf_iterator<char>(),
+    	ostreambuf_iterator<char>(data));
+
+    file.close();
+
+    decompile_osx(data);
+    //decompile_win(data);
 
 	return 0;
 }

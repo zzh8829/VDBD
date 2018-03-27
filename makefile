@@ -43,6 +43,9 @@ else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
 
+run: $(EXECUTABLE)
+	$(EXECUTABLE)
+
 DIRS:
 	mkdir -p $(ODIR) $(BDIR)
 
